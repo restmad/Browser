@@ -75,7 +75,7 @@ CBrowserDlg::CBrowserDlg(BOOL bPopup,LPCTSTR sUrl)
 	editUrl = NULL;
 	editKeyword = NULL;
 	m_bPopup = bPopup;
-	sHomepage = _T("https://www.baidu.com/");
+	sHomepage = _T("http://sanwer.com");
 	if(sUrl==NULL)
 		m_sUrl = sHomepage;
 	else
@@ -189,30 +189,6 @@ void CBrowserDlg::Notify(TNotifyUI& msg)
 			return;
 		}else if (_tcsicmp(sCtrlName,_T("btnSettings")) == 0){
 			CDuiString sUrl = _T("about:settings");
-			if(mBrowser){
-				editUrl->SetText(sUrl);
-				mBrowser->LoadURL(sUrl.GetData());
-			}
-			return;
-		}else if (_tcsicmp(sCtrlName,_T("btnMusic")) == 0){//ÒôÀÖ
-			CDuiString sUrl = _T("http://fm.baidu.com/");
-			if(m_sUrl.CompareNoCase(sHomepage)==0)
-			{
-				if(mBrowser){
-					editUrl->SetText(sUrl);
-					mBrowser->LoadURL(sUrl.GetData());
-				}
-			}
-			else if(m_sUrl.CompareNoCase(sUrl)==0)
-			{
-			}
-			else
-			{
-				Popup(_T("http://fm.baidu.com"));
-			}
-			return;
-		}else if (_tcsicmp(sCtrlName,_T("btnInfo")) == 0){
-			CDuiString sUrl = _T("http://www.sanwer.com");
 			if(mBrowser){
 				editUrl->SetText(sUrl);
 				mBrowser->LoadURL(sUrl.GetData());

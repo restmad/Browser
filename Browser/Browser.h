@@ -1,5 +1,5 @@
-#ifndef  _CLIENT_H_
-#define  _CLIENT_H_
+#ifndef __BROWSER_H__
+#define __BROWSER_H__
 #pragma once
 
 #define WM_ADDRESS_CHANGE	(WM_USER+201)

@@ -7,17 +7,11 @@
 #include "BrowserUI.h"
 #pragma comment(lib,"Iphlpapi.lib")
 
-enum client_menu_ids
-{
-	CLIENT_ID_REFRESH = MENU_ID_USER_FIRST,
-	CLIENT_ID_SAMPLE,
-};
 
-CBrowserHandler::CBrowserHandler(CBrowserDlg* pWindow)
+CBrowserHandler::CBrowserHandler()
 	: m_Browser(NULL)
-	, m_pWindow(pWindow)
+	, m_pWindow(NULL)
 	, m_BrowserId(0)
-	, m_hParentHandle(NULL)
 	, m_Cookie(NULL)
 {
 	CreateProcessMessageDelegates(m_process_message_delegates);
@@ -52,11 +46,11 @@ void CBrowserHandler::OnBeforeContextMenu(CefRefPtr<CefBrowser> browser,
 {
 	//model->Clear();//清空上下文菜单项
 
-	if(model->IsVisible(MENU_ID_PRINT))
-		model->Remove(MENU_ID_PRINT);//删除打印菜单
+	//if(model->IsVisible(MENU_ID_PRINT))
+	//	model->Remove(MENU_ID_PRINT);//删除打印菜单
 
-	if(model->IsVisible(MENU_ID_VIEW_SOURCE))
-		model->Remove(MENU_ID_VIEW_SOURCE);//删除查看源码菜单
+	//if(model->IsVisible(MENU_ID_VIEW_SOURCE))
+	//	model->Remove(MENU_ID_VIEW_SOURCE);//删除查看源码菜单
 
 	//model->AddSeparator();//增加分隔符
 
@@ -72,9 +66,6 @@ bool CBrowserHandler::OnContextMenuCommand(CefRefPtr<CefBrowser> browser,
 {
 	switch (command_id)
 	{
-	//case CLIENT_ID_HOMEPAGE:
-	//	browser->GetMainFrame()->LoadURL(m_sHomepage);
-	//	return true;
 	case CLIENT_ID_REFRESH:
 		browser->Reload();
 		return true;
@@ -208,7 +199,6 @@ bool CBrowserHandler::OnPreKeyEvent(CefRefPtr<CefBrowser> browser,
 	return false;
 }
 
-
 bool CBrowserHandler::OnBeforePopup(CefRefPtr<CefBrowser> browser,
 	CefRefPtr<CefFrame> frame,
 	const CefString& target_url,
@@ -241,10 +231,10 @@ void CBrowserHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 bool CBrowserHandler::DoClose(CefRefPtr<CefBrowser> browser)
 {
 	CEF_REQUIRE_UI_THREAD();
-
 	if (m_BrowserId == browser->GetIdentifier())
 	{
-		::PostMessage(m_hParentHandle, WM_CLOSE, 0, 0);
+		if(m_pWindow != NULL)
+			m_pWindow->Close();
 		return true;
 	}
 
@@ -436,9 +426,9 @@ bool CBrowserUI::CreateBrowser(const CefString& sHomepage, CBrowserDlg* pWindow)
 {
 	CefWindowInfo info;
 	if(m_Browser == NULL)
-		m_Browser = new CBrowserHandler(pWindow);
-	m_Browser->SetHomepage(sHomepage);
+		m_Browser = new CBrowserHandler();
 	if(m_Browser != NULL){
+		m_Browser->SetParentWindow(pWindow);
 		info.SetAsChild(GetManager()->GetPaintWindow(), GetPos());
 		CefBrowserSettings browser_settings;
 		return CefBrowserHost::CreateBrowser(info, m_Browser.get(), sHomepage, browser_settings, NULL);

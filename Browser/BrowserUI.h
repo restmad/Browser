@@ -71,8 +71,14 @@ public:
 
 	typedef std::set<CefMessageRouterBrowserSide::Handler*> MessageHandlerSet;
 
+	enum MENU_LIST
+	{
+		CLIENT_ID_REFRESH = MENU_ID_USER_FIRST,
+		CLIENT_ID_SAMPLE,
+	};
+
 public:
-	CBrowserHandler(CBrowserDlg* pWindow=NULL);
+	CBrowserHandler();
 	~CBrowserHandler();
 
 	//////////////////////////////////////////////////////////////////////////
@@ -244,15 +250,11 @@ public:
 	CefRefPtr<CefBrowser> GetBrowser() { return m_Browser; }
 	CefRefPtr<CefFrame> GetMainFrame() { return m_Browser.get()?m_Browser->GetMainFrame():NULL; }
 	HWND GetBrowserHandle() { return m_Browser.get()?m_Browser->GetHost()->GetWindowHandle():NULL; }
-	HWND GetParentHandle() const { return m_hParentHandle; }
-	void SetParentHandle(CefWindowHandle hParent) { m_hParentHandle = hParent; }
-	CefString GetHomepage() const { return m_sHomepage; }
-	void SetHomepage(const CefString& sHomepage) { m_sHomepage = sHomepage; }
+	void SetParentWindow(CBrowserDlg* pWindow) { m_pWindow = pWindow; }
 	int GetBrowserId() { return m_BrowserId; }
 
 	// Request that all existing browser windows close.
 	void CloseAllBrowsers(bool force_close);
-	void CreateBrowser(HWND hParentWnd, const RECT& rect);
 
 protected:
 	// Create all of ProcessMessageDelegate objects.
@@ -267,9 +269,6 @@ protected:
 
 	// The child browser id
 	int m_BrowserId;
-
-	HWND m_hParentHandle;
-	CefString m_sHomepage;
 
 	// Registered delegates.
 	ProcessMessageDelegateSet m_process_message_delegates;

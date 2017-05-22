@@ -1,12 +1,12 @@
-# Browser(CEFä¯ÀÀÆ÷)
-  CEFä¯ÀÀÆ÷ÊÇDuiLib+CEFµÄÑİÊ¾ÓÃµÄ³ÌĞò£¬º¬Flash PPAPI²å¼şÓë»ñÈ¡±¾µØ¼ÆËã»úÃû³ÆµÄÑİÊ¾¡£
-  ![CEFä¯ÀÀÆ÷](https://github.com/sanwer/Browser/blob/master/Demo.png)
+# Browser(CEFæµè§ˆå™¨)
+  CEFæµè§ˆå™¨æ˜¯DuiLib+CEFçš„æ¼”ç¤ºç”¨çš„ç¨‹åºï¼Œå«Flash PPAPIæ’ä»¶ä¸è·å–æœ¬åœ°è®¡ç®—æœºåç§°çš„æ¼”ç¤ºã€‚
+  ![CEFæµè§ˆå™¨](https://github.com/sanwer/Browser/blob/master/Demo.png)
 
 ## DuiLib
-  [Duilib](https://github.com/duilib/duilib)ÊÇÒ»¸öWindowsÏÂÃâ·Ñ¿ªÔ´µÄDirectUI½çÃæ¿â¡£<br />
-  µ±Ç°°æÊÇ[DuiLib_Ultimate](https://github.com/qdtroy/DuiLib_Ultimate)µÄ¶¨ÖÆ°æ£¬Ö÷Òª×öÑİÊ¾ÓÃ£¬²»¶¨Ê±¸üĞÂ¡£
+  [Duilib](https://github.com/duilib/duilib)æ˜¯ä¸€ä¸ªWindowsä¸‹å…è´¹å¼€æºçš„DirectUIç•Œé¢åº“ã€‚<br />
+  [å½“å‰ç‰ˆ]æ˜¯(https://github.com/sanwer/DuiLib)åŸºäº[DuiLib_Ultimate](https://github.com/qdtroy/DuiLib_Ultimate)çš„ä¸ªäººå®šåˆ¶ç‰ˆã€‚
 
 ## CEF3(libcef_dll)
-  ÒÑ»Ø¹öÒÔ±ãÖ§³ÖXP¡£<br />
+  å·²å›æ»šä»¥ä¾¿æ”¯æŒXPã€‚<br />
   CEF Version:      3.2556.1368.g535c4fb<br />
   Chromium Verison: 48.0.2556.0<br />
