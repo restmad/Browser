@@ -211,8 +211,9 @@ bool CBrowserHandler::OnBeforePopup(CefRefPtr<CefBrowser> browser,
 	CefBrowserSettings& settings,
 	bool* no_javascript_access)
 {
-	m_pWindow->Popup(std::wstring(target_url).c_str());
-	return true;
+	//m_pWindow->Popup(std::wstring(target_url).c_str());
+	//return true;
+	return false;
 }
 
 void CBrowserHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
