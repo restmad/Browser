@@ -20,15 +20,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	CPaintManagerUI::SetResourceZip(MAKEINTRESOURCE(IDR_ZIPRES), _T("ZIPRES"));
 
 	CefMainArgs main_args(hInstance);
-	CefRefPtr<CefApp> app;
+	CefRefPtr<CBrowserApp> app(new CBrowserApp);
 	CefRefPtr<CefCommandLine> command_line = CefCommandLine::CreateCommandLine();
 	command_line->InitFromString(::GetCommandLineW());
 	const std::string& process_type = command_line->GetSwitchValue("type");
-	if (process_type == "renderer"){
-		app = new CRendererApp();
-	}else{
-		app = new CBrowserApp();
-	}
 	int exit_code = CefExecuteProcess(main_args, app.get(), NULL);
 	if (exit_code >= 0) {
 		// The sub-process has completed so return here.
@@ -75,7 +70,7 @@ CBrowserDlg::CBrowserDlg(BOOL bPopup,LPCTSTR sUrl)
 	editUrl = NULL;
 	editKeyword = NULL;
 	m_bPopup = bPopup;
-	sHomepage = _T("http://sanwer.com");
+	sHomepage = _T("http://sanwer.com/");
 	if(sUrl==NULL)
 		m_sUrl = sHomepage;
 	else

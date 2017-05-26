@@ -12,6 +12,20 @@ pushd "%CD%\Browser\Skin\"
 popd popd
 Echo.
 
+
+IF NOT EXIST "%CD%\Bin\cef.pak" (
+pushd "%CD%\Bin\"
+IF NOT EXIST cef_binary_3.2623.1401.gb90a3be.zip (
+wget https://github.com/sanwer/libcef/releases/download/latest/cef_binary_3.2623.1401.gb90a3be.zip
+IF "%errorlevel%"=="1" GOTO error
+)
+7z.exe x cef_binary_3.2623.1401.gb90a3be.zip
+popd popd
+Echo.
+)
+
+IF NOT EXIST "%CD%\Bin\cef.pak" GOTO error
+
 :Build
 DEVENV Browser.sln /build "Release|Win32"
 IF "%errorlevel%"=="1" GOTO error
@@ -20,11 +34,11 @@ Echo.
 Echo Package
 pushd "%CD%\Bin\"
 IF EXIST Browser.zip DEL /F /Q /S Browser.zip
-7z.exe a Browser.zip Browser.exe locales cef.pak cef_100_percent.pak cef_extensions.pak d3dcompiler_43.dll d3dcompiler_47.dll icudtl.dat libcef.dll libEGL.dll libGLESv2.dll natives_blob.bin pepflashplayer.dll
+7z.exe a Browser.zip Browser.exe locales PepperFlash cef.pak cef_100_percent.pak cef_extensions.pak d3dcompiler_43.dll d3dcompiler_47.dll icudtl.dat libcef.dll libEGL.dll libGLESv2.dll natives_blob.bin
 popd popd
 
 :Clean
-del /F /Q /S "%CD%\*.pdb"
+Rem del /F /Q /S "%CD%\*.pdb"
 SET PATH=%OLDPATH%
 exit /B 0
 

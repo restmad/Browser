@@ -22,9 +22,6 @@
 #include <objbase.h>
 #include "resource.h"
 
-#include "include/cef_client.h"
-#include "include/cef_app.h"
-
 #include <UIlib.h>
 using namespace DuiLib;
 

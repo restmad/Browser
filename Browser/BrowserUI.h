@@ -1,15 +1,13 @@
 #ifndef __BROWSERUI_H__
 #define __BROWSERUI_H__
 #pragma once
-//#include <algorithm>
-//#include <sstream>
-//#include <string>
 #include <list>
 #include <set>
 #undef GetFirstChild
 #undef GetNextSibling
-#include "include/base/cef_bind.h"
+#include "include/cef_client.h"
 #include "include/cef_app.h"
+#include "include/base/cef_bind.h"
 #include "include/cef_browser.h"
 #include "include/cef_command_line.h"
 #include "include/cef_v8.h"
@@ -304,28 +302,62 @@ private:
 	IMPLEMENT_REFCOUNTING(CBrowserV8Handler);
 };
 
-class CBrowserApp : public CefApp, public CefBrowserProcessHandler
+class CBrowserApp
+	: public CefApp
+	, public CefBrowserProcessHandler
+	, public CefRenderProcessHandler
 {
 public:
 	CBrowserApp(){}
-	virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() OVERRIDE { return this; }
-	virtual void OnContextInitialized() OVERRIDE{}
 
 private:
-	void OnBeforeCommandLineProcessing(
-		const CefString& process_type,
+	// CefApp methods.
+	virtual void OnBeforeCommandLineProcessing(const CefString& process_type, CefRefPtr<CefCommandLine> command_line) OVERRIDE;
+	virtual void OnRegisterCustomSchemes( CefRefPtr<CefSchemeRegistrar> registrar) OVERRIDE;
+	virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() OVERRIDE{ return this; }
+	virtual CefRefPtr<CefRenderProcessHandler> GetRenderProcessHandler() OVERRIDE{ return this; }
+
+	// CefBrowserProcessHandler methods.
+	virtual void OnContextInitialized() OVERRIDE;
+	virtual void OnBeforeChildProcessLaunch(
 		CefRefPtr<CefCommandLine> command_line) OVERRIDE;
+	virtual void OnRenderProcessThreadCreated(CefRefPtr<CefListValue> extra_info) OVERRIDE;
+
+	// CefRenderProcessHandler methods.
+	virtual void OnRenderThreadCreated(CefRefPtr<CefListValue> extra_info) OVERRIDE;
+	virtual void OnWebKitInitialized() OVERRIDE;
+	virtual void OnBrowserCreated(CefRefPtr<CefBrowser> browser) OVERRIDE;
+	virtual void OnBrowserDestroyed(CefRefPtr<CefBrowser> browser) OVERRIDE;
+	virtual CefRefPtr<CefLoadHandler> GetLoadHandler() OVERRIDE;
+	virtual bool OnBeforeNavigation(
+		CefRefPtr<CefBrowser> browser,
+		CefRefPtr<CefFrame> frame,
+		CefRefPtr<CefRequest> request,
+		NavigationType navigation_type,
+		bool is_redirect) OVERRIDE;
+	virtual void OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context) OVERRIDE;
+	virtual void OnContextReleased(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context) OVERRIDE;
+	virtual void OnUncaughtException(
+		CefRefPtr<CefBrowser> browser,
+		CefRefPtr<CefFrame> frame,
+		CefRefPtr<CefV8Context> context,
+		CefRefPtr<CefV8Exception> exception,
+		CefRefPtr<CefV8StackTrace> stackTrace) OVERRIDE;
+	virtual void OnFocusedNodeChanged(
+		CefRefPtr<CefBrowser> browser,
+		CefRefPtr<CefFrame> frame,
+		CefRefPtr<CefDOMNode> node) OVERRIDE;
+	virtual bool OnProcessMessageReceived(
+		CefRefPtr<CefBrowser> browser,
+		CefProcessId source_process,
+		CefRefPtr<CefProcessMessage> message) OVERRIDE;
+
+private:
+	std::vector<CefString> cookieable_schemes_;
+
 	IMPLEMENT_REFCOUNTING(CBrowserApp);
 };
 
-class CRendererApp : public CefApp, public CefRenderProcessHandler 
-{
-public:
-	CRendererApp(){}
-	CefRefPtr<CefRenderProcessHandler> GetRenderProcessHandler() OVERRIDE {return this;}
-	void OnWebKitInitialized() OVERRIDE;
-	IMPLEMENT_REFCOUNTING(CRendererApp);
-};
 
 class CBrowserUI : public CControlUI, public IMessageFilterUI
 {
