@@ -18,11 +18,6 @@
 
 #define _CRT_SECURE_NO_DEPRECATE
 
-#include <windows.h>
-#include <objbase.h>
 #include "resource.h"
-
-#include <UIlib.h>
-using namespace DuiLib;
 
 #endif
