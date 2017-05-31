@@ -6,3 +6,13 @@
 ```sh
 Build.cmd
 ```
+
+**Cleanup project**
+```sh
+# bfg.jar --delete-files Bin/cef.pak  Browser.git
+# java -jar bfg.jar --strip-blobs-bigger-than 30K Browser.git
+Rem Modify the list of files to delete
+# cd Browser.git
+# git reflog expire --expire=now --all && git gc --prune=now --aggressive
+
+```
