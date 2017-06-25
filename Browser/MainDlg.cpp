@@ -97,13 +97,13 @@ namespace Browser
 	void CBrowserDlg::InitWindow()
 	{
 		SetIcon(IDR_MAINFRAME);
-		labTitle = static_cast<CLabelUI*>(m_pm.FindControl(_T("labTitle")));
-		uiToolbar = static_cast<CControlUI*>(m_pm.FindControl(_T("uiToolbar")));
-		btnBackward = static_cast<CButtonUI*>(m_pm.FindControl(_T("btnBackward")));
-		btnForward = static_cast<CButtonUI*>(m_pm.FindControl(_T("btnForward")));
-		editUrl = static_cast<CEditUI*>(m_pm.FindControl(_T("editUrl")));
-		editKeyword = static_cast<CEditUI*>(m_pm.FindControl(_T("editKeyword")));
-		mBrowser = static_cast<CBrowserUI*>(m_pm.FindControl(_T("mBrowser")));
+		labTitle = static_cast<CLabelUI*>(m_Manager.FindControl(_T("labTitle")));
+		uiToolbar = static_cast<CControlUI*>(m_Manager.FindControl(_T("uiToolbar")));
+		btnBackward = static_cast<CButtonUI*>(m_Manager.FindControl(_T("btnBackward")));
+		btnForward = static_cast<CButtonUI*>(m_Manager.FindControl(_T("btnForward")));
+		editUrl = static_cast<CEditUI*>(m_Manager.FindControl(_T("editUrl")));
+		editKeyword = static_cast<CEditUI*>(m_Manager.FindControl(_T("editKeyword")));
+		mBrowser = static_cast<CBrowserUI*>(m_Manager.FindControl(_T("mBrowser")));
 		if (labTitle == NULL || uiToolbar == NULL || editUrl == NULL || editKeyword == NULL || mBrowser == NULL)
 		{
 			MessageBox(NULL,_T("加载资源文件失败"),_T("Browser"),MB_OK|MB_ICONERROR);

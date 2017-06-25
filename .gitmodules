@@ -1,6 +1,0 @@
-[submodule "libcef"]
-	path = libcef
-	url = https://github.com/sanwer/libcef.git
-[submodule "DuiLib"]
-	path = DuiLib
-	url = https://github.com/sanwer/DuiLib.git
